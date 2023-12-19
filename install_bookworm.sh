@@ -51,7 +51,10 @@ shift $((OPTIND-1))
 
 # install needed packages
 apt-get -y --allow-unauthenticated --allow-downgrades --allow-remove-essential --allow-change-held-packages --allow-releaseinfo-change update
+
+if [ ! -e /boot/loxberry/.docker ]; then
 apt-get --no-install-recommends -y --allow-unauthenticated --fix-broken --reinstall --allow-downgrades --allow-remove-essential --allow-change-held-packages install jq git lsb-release
+fi
 
 # Stop loxberry Service
 if /bin/systemctl --no-pager status apache2.service; then
@@ -220,6 +223,9 @@ echo -e "Distribution:       $PRETTY_NAME"
 echo -e "DietPi Version:     $G_DIETPI_VERSION_CORE.$G_DIETPI_VERSION_SUB"
 echo -e "Hardware Model:     $G_HW_MODEL_NAME"
 echo -e "Architecture:       $G_HW_ARCH_NAME"
+if [ ! -e /boot/loxberry/.docker ]; then
+echo -e "DockerContainer:    This appears to be an image based on Docker, this is not officially supported and is not subject to Loxberry maintenance."
+fi
 echo -e "\n\nHit ${BOLD}<CTRL>+C${RESET} now to stop, any other input will continue.\n"
 read -n 1 -s -r -p "Press any key to continue"
 tput clear
@@ -338,6 +344,7 @@ TITLE "Installing additional software packages from apt repository..."
 /boot/dietpi/func/dietpi-set_software apt cache clean
 
 # Configure PHP - we want PHP7.4 as default while Bookworm only has 8.2
+if [ ! -e /boot/loxberry/.docker ]; then
 curl -sL https://packages.sury.org/php/apt.gpg | gpg --dearmor | tee /usr/share/keyrings/deb.sury.org-php.gpg >/dev/null
 echo "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
 
@@ -384,7 +391,7 @@ if [ $? != 0 ]; then
 else
         OK "Successfully installed all queued packages.\n"
 fi
-
+fi
 /boot/dietpi/func/dietpi-set_software apt compress enable
 /boot/dietpi/func/dietpi-set_software apt cache clean
 apt-get -y --allow-unauthenticated --allow-downgrades --allow-remove-essential --allow-change-held-packages --allow-releaseinfo-change update
@@ -991,6 +998,7 @@ TITLE "Disable root login via ssh and password..."
 TITLE "Installing NodeJS"
 /boot/dietpi/dietpi-software install 9
 
+if [ ! -e /boot/loxberry/.docker ]; then
 # Installing YARN
 TITLE "Installing Yarn"
 curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarnkey.gpg >/dev/null
@@ -998,6 +1006,7 @@ echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/deb
 
 apt-get -y --allow-unauthenticated --allow-downgrades --allow-remove-essential --allow-change-held-packages --allow-releaseinfo-change update
 apt-get --no-install-recommends -y --allow-unauthenticated --fix-broken --reinstall --allow-downgrades --allow-remove-essential --allow-change-held-packages install yarn
+fi
 
 # Configuring /etc/hosts
 TITLE "Setting up /etc/hosts and /etc/hostname..."
