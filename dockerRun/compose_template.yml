@@ -9,7 +9,7 @@
       - "/docker-entrypoint.sh"
     environment:
       - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-    hostname: "%LOXBERRY_HOSTNAME"
+    hostname: "%LOXBERRY_HOSTNAME%"
     image: "loxberry"
     ipc: "private"
     logging:
