@@ -10,9 +10,9 @@ setup anpassen, es sollte fragen:
 - wie soll container heisen
 - wo soll /opt liegen
 - welche ports werden wie gemappt
-- Build process starten (done)
+- (done) Build process starten 
 - aus compose-template die variablen ersetzen und an docker-compose angängen
 
 Build process erweitern:
-- PreInstall Script erstellen und in Image pushen
-- Install Script anpassen und in Image pushen
+- (done) PreInstall Script erstellen und in Image pushen
+- (done) Install Script anpassen und in Image pushen
