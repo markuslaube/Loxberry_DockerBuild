@@ -27,8 +27,8 @@ Last Steps for first Edition:
 - /opt automagisch nach ersten Containerstart zurückbringen
 
 # Verwendung:
-giturl="https://github.com/markuslaube/Loxberry_DockerBuild.git"
-gitrepo="Loxberry_DockerBuild"
-git clone ${giturl}
-cd ${gitrepo}
-sudo bash setup.sh
+- giturl="https://github.com/markuslaube/Loxberry_DockerBuild.git"
+- gitrepo="Loxberry_DockerBuild"
+- git clone ${giturl}
+- cd ${gitrepo}
+- sudo bash setup.sh
