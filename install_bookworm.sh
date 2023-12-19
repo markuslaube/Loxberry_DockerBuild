@@ -223,7 +223,7 @@ echo -e "Distribution:       $PRETTY_NAME"
 echo -e "DietPi Version:     $G_DIETPI_VERSION_CORE.$G_DIETPI_VERSION_SUB"
 echo -e "Hardware Model:     $G_HW_MODEL_NAME"
 echo -e "Architecture:       $G_HW_ARCH_NAME"
-if [ ! -e /boot/loxberry/.docker ]; then
+if [ -e /boot/loxberry/.docker ]; then
 echo -e "DockerContainer:    This appears to be an image based on Docker, this is not officially supported and is not subject to Loxberry maintenance."
 fi
 echo -e "\n\nHit ${BOLD}<CTRL>+C${RESET} now to stop, any other input will continue.\n"
