@@ -9,8 +9,8 @@
       - "/docker-entrypoint.sh"
     environment:
       - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-    hostname: "%LOXBERRY_HOSTNAME%"
-    image: "loxberry"
+    hostname: "loxberry"
+    image: "%LOXBERRY_IMAGENAME%"
     ipc: "private"
     logging:
       driver: "json-file"
@@ -21,7 +21,8 @@
     stdin_open: true
     tty: true
     ports:
-      - "4280:80/tcp"
+      - "%DOCKER_NET_TCP_80%:80/tcp"
+      - "%DOCKER_NET_TCP_443%:443/tcp"
     volumes:
       - %LOXBERRY_OPT_DIR%:/opt/
     working_dir: "/opt"
