@@ -1,0 +1,28 @@
+#
+# example for configuration blog in docker-compose.yml 
+#
+  loxberry3:
+    command:
+      - "/bin/bash"
+    container_name: "loxberry3"
+    entrypoint:
+      - "/docker-entrypoint.sh"
+    environment:
+      - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+    hostname: "loxberry3"
+    image: "loxberry3"
+    ipc: "private"
+    logging:
+      driver: "json-file"
+      options: {}
+    privileged: true
+    security_opt:
+      - "label=disable"
+    stdin_open: true
+    tty: true
+    ports:
+      - "4280:80/tcp"
+    volumes:
+      - ./volumes/loxberry/opt:/opt/
+      - ./volumes/loxberry/log:/log/
+    working_dir: "/opt"
