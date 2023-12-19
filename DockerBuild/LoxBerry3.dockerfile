@@ -11,8 +11,11 @@ RUN apt-get upgrade
 RUN apt-cache dumpavail | dpkg --merge-avail
 COPY apt-packages.txt /tmp/apt-packages.txt
 RUN dpkg --set-selections < /tmp/apt-packages.txt
-RUN apt-get -y dselect-upgrade
-RUN apt-get -y update
+RUN export DEBIAN_FRONTEND=noninteractive ; apt-get -y dselect-upgrade
+RUN export DEBIAN_FRONTEND=noninteractive ; apt-get -y update
 RUN adduser --shell /bin/bash --home /home/dietpi --disabled-password --gecos "DietPi" dietpi
+COPY root_known_hosts /root/.ssh/known_hosts
+COPY preinstall.sh /tmp/
+RUN /bin/bash /tmp/preinstall.sh
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
