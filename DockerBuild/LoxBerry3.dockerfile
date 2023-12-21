@@ -1,4 +1,5 @@
-FROM debian:12
+ARG DEBIAN_RELEASE
+FROM debian:${DEBIAN_RELEASE}
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -y update
 RUN apt-get -y install apt-utils
