@@ -18,4 +18,6 @@ Meine Testergebnisse hier zusammengefasst. Mit dem Hinweis, das ich den Loxberry
 - [ ] - Any Plugin, das nervt mich persönlich :-/
         14:16:53.128 CRITICAL: The Plugin Interface is not supported by this LoxBerry Version. I cannot proceed with the installation.
         Vermutlich eine Inkopatibilität zwischen LoxBerry3 und den Plugin?
-- [X] - InterCom22Lox -> Funktionier allerdings hatte ich Fehler wenn ich den Loxberry per https ausfrufe ... ich glaub da kommt er wegen den Ports durcheinander ...
+- [ ] - InterCom22Lox -> Funktionier allerdings hatte ich Fehler wenn ich den Loxberry per https ausfrufe ... ich glaub da kommt er wegen den Ports durcheinander ...
+        Korrektur: Livestream geht, Bilder werden aber entweder nicht aufgezeichnet,
+        PHP Fatal error:  Uncaught Error: Call to undefined function imagecreatefromjpeg() in /opt/loxberry/webfrontend/html/plugins/intercom22lox/getpicture.php:11
