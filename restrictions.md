@@ -21,3 +21,7 @@ Meine Testergebnisse hier zusammengefasst. Mit dem Hinweis, das ich den Loxberry
 - [ ] - InterCom22Lox -> Funktionier allerdings hatte ich Fehler wenn ich den Loxberry per https ausfrufe ... ich glaub da kommt er wegen den Ports durcheinander ...
         Korrektur: Livestream geht, Bilder werden aber entweder nicht aufgezeichnet,
         PHP Fatal error:  Uncaught Error: Call to undefined function imagecreatefromjpeg() in /opt/loxberry/webfrontend/html/plugins/intercom22lox/getpicture.php:11
+- [ ] - Generelles:
+        ==> /var/log/apache2/error.log <==
+        pgrep: pattern that searches for process name longer than 15 characters will result in zero matches
+        Try `pgrep -f' option to match against the complete command line.
