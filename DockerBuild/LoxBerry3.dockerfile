@@ -8,8 +8,8 @@ RUN curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.or
 RUN curl -sSLo /usr/share/keyrings/dl.yarnpkg.com.asc https://dl.yarnpkg.com/debian/pubkey.gpg
 RUN echo "deb [signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
 RUN echo "deb [signed-by=/usr/share/keyrings/dl.yarnpkg.com.asc] https://dl.yarnpkg.com/debian stable main" > /etc/apt/sources.list.d/yarn.list
-RUN apt-get update && apt-get install -y yarn  # wenn ich das über die packageliste  mache kommt bei mir ein fehler database outdatet
-RUN apt-get upgrade
+RUN apt-get -y update && apt-get -y install yarn  # wenn ich das über die packageliste  mache kommt bei mir ein fehler database outdatet
+RUN apt-get -y upgrade
 RUN apt-cache dumpavail | dpkg --merge-avail
 COPY apt-packages.txt /tmp/apt-packages.txt
 RUN dpkg --set-selections < /tmp/apt-packages.txt
