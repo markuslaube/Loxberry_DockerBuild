@@ -1102,4 +1102,26 @@ echo -e "\nGood Bye.\n\n${RESET}"
 
 touch /boot/rootfsresized
 
-exit 0
+if [ ! -e /boot/loxberry/.docker ]; then
+	exit 0
+else
+	systemctl stop apache2.service
+	systemctl stop autofs.service
+	systemctl stop cron.service
+	systemctl stop mosquitto.service
+	systemctl stop nmbd.service
+	systemctl stop vsftpd.service
+	systemctl stop smbd.service
+	systemctl stop rsyslog.service
+	mv /opt /opt2
+	# offenes Todo:
+	# 4. Zeile vom /root/.vimrc löschen :D
+	touch /boot/docker/.firstboot
+	rm -f /boot/docker/.prebuild
+	. /boot/loxberry/.docker
+	echo "jetzt bitte auslogen und dann auf dem Docker-Host folgendes ausführen:"
+ 	echo
+	echo "docker commit ${LOXBERRY_IMAGENAME}_temp ${LOXBERRY_IMAGENAME}:latest"
+	echo ""
+	exit 0
+ fi
