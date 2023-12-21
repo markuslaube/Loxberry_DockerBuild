@@ -10,21 +10,30 @@ Ich habe das ganze zwar erfolgreich getestet - und ja es funktioniert, es gibt a
 
 # todo-listen
 setup anpassen, es sollte fragen:
-- (done) wo liegt docker-compose.yml
+- (part) wo liegt docker-compose.yml
+         >> nachdem noch einige manuelle Schritte sind, füge ich unser compose dort noch nicht an, das heist eigentlich brauche ich die Information gar nicht
 - (done) wie soll container heisen
-- (part) wo soll /opt liegen
+- (done) wo soll /opt liegen
 - (part) welche ports werden wie gemappt
-- (done) Build process starten 
-- (done) aus compose-template die variablen ersetzen und an docker-compose angängen
+         >> aktuell nur port 80 und port 443,
+         >> vermutlich will man das netz für den container zukünftig auf das eigentliche Host-Netz legen
+- (done) Build process starten
+         >> starten, weil ich leider noch nicht darum herum komme manuell interactiv etwas im container zu machen, aber sobald das image am ende abgeschlossen wird geht alles automagisch. 
+- (done) aus compose-template die variablen ersetzen 
 
 Build process erweitern:
 - (done) PreInstall Script erstellen und in Image pushen
 - (done) Install Script anpassen und in Image pushen
 
 Last Steps for first Edition:
-- /opt automagisch wegschieben
-- manuelle Steps im image wenigstens automagisch starten
-- /opt automagisch nach ersten Containerstart zurückbringen
+- (done) /opt automagisch wegschieben
+- (done) manuelle Steps im image wenigstens automagisch starten
+- (done) /opt automagisch nach ersten Containerstart zurückbringen
+- (done) systemd richtig gut automagisch konfigurieren
+- (open) usage / help in setup.sh aufnehmen um anzugeben was für parameter gehen würden
+- (open) usability / optik der Texte an die Qualität des Install-Script vom Loxberry heranbringen
+- (open) Original-Install-Script weiter optimieren um so wenig wie möglich Interaction zu haben
+         >> Ziel ist keine Interaction, dann spare ich mir das zwischenzeitliche starten des Images :D
 
 # Verwendung:
 - giturl="https://github.com/markuslaube/Loxberry_DockerBuild.git"
