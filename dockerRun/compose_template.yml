@@ -1,5 +1,5 @@
 #
-# example for configuration blog in docker-compose.yml 
+# example for configuration blog in docker-compose.yml
 #
   %LOXBERRY_CONTAINER%:
     command:
@@ -20,9 +20,9 @@
       - "label=disable"
     stdin_open: true
     tty: true
+    restart: "unless-stopped"
     ports:
       - "%DOCKER_NET_TCP_80%:80/tcp"
       - "%DOCKER_NET_TCP_443%:443/tcp"
     volumes:
       - %LOXBERRY_OPT_DIR%:/opt/
-    working_dir: "/opt"
