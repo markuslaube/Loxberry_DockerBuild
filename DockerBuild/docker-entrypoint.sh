@@ -9,16 +9,17 @@ container=docker
 export container
 
 if [ $# -eq 0 ]; then
-	echo >&2 'ERROR: No command specified. You probably want to run `journalctl -f`, or maybe `bash`?'
-	exit 1
+        echo >&2 'ERROR: No command specified. You probably want to run `journalctl -f`, or maybe `bash`?'
+        exit 1
 fi
 
 if [ ! -t 0 ]; then
-	echo >&2 'ERROR: TTY needs to be enabled (`docker run -t ...`).'
-	exit 1
+        echo >&2 'ERROR: TTY needs to be enabled (`docker run -t ...`).'
+        exit 1
 fi
 
 env >/etc/docker-entrypoint-env
+
 
 cat >/etc/systemd/system/docker-entrypoint.target <<EOF
 [Unit]
@@ -47,20 +48,36 @@ EnvironmentFile=/etc/docker-entrypoint-env
 WantedBy=multi-user.target
 EOF
 
+# deaktiviere "stoerende Dienste" auf etwas schmutzigere art, sinnvoller wäre ein mask, das hab ich aber noch nicht probiert
+cp /boot/docker/dphys-swapfile.service /lib/systemd/system/
+cp /boot/docker/networking.service /lib/systemd/system/
+cp /boot/docker/wpa_supplicant.service /lib/systemd/system/
+
+# andere dinge müssen vielleicht nicht gar so schmutzig abgeschalten werden
 systemctl mask systemd-firstboot.service systemd-udevd.service systemd-modules-load.service
 systemctl unmask systemd-logind
 systemctl enable docker-entrypoint.service
 
+if [ -e /boot/docker/.firstboot ]; then
+        mv /opt2/loxberry /opt/
+	rm -rf /opt2
+        rm -f /boot/docker/.firstboot
+fi
+
+if [ ! -e /boot/docker/.prebuild ]; then
+        /bin/bash /boot/docker/build-systemd.sh
+fi
+
 systemd=
 if [ -x /lib/systemd/systemd ]; then
-	systemd=/lib/systemd/systemd
+        systemd=/lib/systemd/systemd
 elif [ -x /usr/lib/systemd/systemd ]; then
-	systemd=/usr/lib/systemd/systemd
+        systemd=/usr/lib/systemd/systemd
 elif [ -x /sbin/init ]; then
-	systemd=/sbin/init
+        systemd=/sbin/init
 else
-	echo >&2 'ERROR: systemd is not installed'
-	exit 1
+        echo >&2 'ERROR: systemd is not installed'
+        exit 1
 fi
 systemd_args="--show-status=false --unit=docker-entrypoint.target"
 echo "$0: starting $systemd $systemd_args"
