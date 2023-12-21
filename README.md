@@ -6,7 +6,8 @@ Ich habe das ganze zwar erfolgreich getestet - und ja es funktioniert, es gibt a
  - a noch einige stellen an denen ich nicht sicher bin ob ich alles dokumentiert habe
  - b keinen Support von Loxberry selbst auf den Container
  - c keinen bzw. sehr verzögerten Support von mir auf die Anleitung
- - d auch wenn ich angefangen habe, so viel wie möglich in englisch zu dokumentieren, alle texte und hilfen innerhalb meiner Scripte sind ausschließlich auf deutsch 
+ - d auch wenn ich angefangen habe, so viel wie möglich in englisch zu dokumentieren, alle texte und hilfen innerhalb meiner Scripte sind ausschließlich auf deutsch
+ - e Achtung aktuell erkennt das Image noch nicht das es "nur" ein Update gab. Das heist wir können das image noch nicht neu bauen um eine alte Installation zu nutzen.
 
 # todo-listen
 setup anpassen, es sollte fragen:
@@ -34,6 +35,10 @@ Last Steps for first Edition:
 - (open) usability / optik der Texte an die Qualität des Install-Script vom Loxberry heranbringen
 - (open) Original-Install-Script weiter optimieren um so wenig wie möglich Interaction zu haben
          >> Ziel ist keine Interaction, dann spare ich mir das zwischenzeitliche starten des Images :D
+
+ToDos für Second Editon:
+- (todo) beim ersten start des Containers erkennen das /opt/loxberry existiert und behalten
+- (todo) beim ersten start des Containers erkennen das /opt/loxberry und außerhalb von /opt liegende Informationen zurückholen (passwörter, etc.)
 
 # Verwendung:
 - giturl="https://github.com/markuslaube/Loxberry_DockerBuild.git"
