@@ -24,6 +24,6 @@ COPY dphys-swapfile.service /boot/docker/
 COPY networking.service /boot/docker/
 COPY wpa_supplicant.service /boot/docker/
 COPY build-systemd.sh /boot/docker/
-RUN curl -sSLo /root/install-loxberry.sh https://raw.githubusercontent.com/markuslaube/Loxberry_DockerBuild/main/install_bookworm.sh
+COPY install_${DEBIAN_RELEASE}.sh /root/install-loxberry.sh
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
