@@ -25,7 +25,7 @@ do
     -o | --opt-dir)		LOXBERRY_OPT_DIR=$2	; shift 2  ;;
     -w | --port80)		DOCKER_NET_TCP_80=$2	; shift 2  ;;
     -s | --port443)		DOCKER_NET_TCP_443=$2	; shift 2  ;;
-    -l | --linux                DEBIAN_RELEASE=$2       ; shift 2  ;;
+    -l | --linux)               DEBIAN_RELEASE=$2       ; shift 2  ;;
     --) shift; break ;;
     *) >&2 echo Unsupported option: $1
        usage ;;
