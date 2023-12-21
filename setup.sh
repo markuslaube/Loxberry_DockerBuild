@@ -23,7 +23,7 @@ function usage() {
 	echo "-o | --opt-dir [/pfad/zu/dockervolumes/] gibt einen Pfad an, wo der Container später sein /opt ablegen soll."
         echo "-w | --port80 [0-65000] gibt einen Port an, der an den Container auf Port 80 umgeleitet wird (w für web)"
 	echo "-s | --port443 [0-65000] gibt einen Port an, der an den Container auf Port 443 umgeleitet wird (s für secure web)"
-        echo "-l | --linux [11|12] gibt an welche Debian Distribution verwendet werden soll (noch nicht final umgesetz)"
+        echo "-l | --linux [bullseye|bookworm] gibt an welche Debian Distribution verwendet werden soll (noch nicht final umgesetz)"
 	echo ""
 }
 	
@@ -72,8 +72,16 @@ if [ -z $DOCKER_NET_TCP_443 ]; then
 	read -p "DOCKER_NET_TCP_443 nicht gesetzt, Bitte gib einen Port, über den Du port 80 des Containers erreichen willst an: " DOCKER_NET_TCP_443
 fi
 if [ -z $DEBIAN_RELEASE ]; then
-	read -p "DEBIAN_RELEASE nicht gesetzt, Bitte gib '11' oder '12' an um Dich für Debian11 oder Debian12 zu entscheiden: " DEBIAN_RELEASE
+	read -p "DEBIAN_RELEASE nicht gesetzt, Bitte gib '11' oder '12' an um Dich für Debian11 (bullseye) oder Debian12 (Bookworm) zu entscheiden: " DEBIAN_RELEASE
 fi
+
+function testdebian() { 
+case $DEBIAN_RELEASE in
+    11 | bullseye | Bullseye )	DEBIAN_RELEASE="bullseye" ;;
+    12 | bookworm | Bookworm )	DEBIAN_RELEASE="bookworm" ;;
+    *)				echo -n "unbekannte Debian Version, 11|12|bullseye|Bookworm sind zulässig" ; exit 1 ;;
+esac
+}
 
 (
 echo DOCKER_COMPOSE_FILE=$DOCKER_COMPOSE_FILE
