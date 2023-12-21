@@ -1,4 +1,4 @@
-Meine Testergebnisse hier zusammengefasst. Mit dem Hinweis, das ich den Loxberry 3.x noch nirgends wo anders im Einsatz hatte und mit Debian11 natürlich auch da schon "Beta" bezogen auf den Loxberry bin
+Meine Testergebnisse hier zusammengefasst. Mit dem Hinweis, das ich den Loxberry 3.x noch nirgends wo anders im Einsatz hatte und mit Debian12 natürlich auch da schon "Beta" bezogen auf den Loxberry bin
 
 - [X] - https aktivieren und nutzen
 - [X] - Paswörter / SuperPIN über Config setzen
@@ -12,7 +12,7 @@ Meine Testergebnisse hier zusammengefasst. Mit dem Hinweis, das ich den Loxberry
 - [X] - Mini-Server verbinden
 - [ ] - Mini-Server per Scan finden, wie ich schon irgendwo schrieb ... vermutlich sollte der LoxBerry eher anders ins Netz kommen als ich das tue
 - [X] - Plugins aus github installieren
-- [ ] - Allerdings bei TExt2SIP hab ich aktuell einen fehler der auf irgendwas zwischen Loxberry3, Debian11 hinweist:
+- [ ] - Allerdings bei TExt2SIP hab ich aktuell einen fehler der auf irgendwas zwischen Loxberry3, Debian12 hinweist:
         14:12:20.709 CRITICAL: Error installing  libssl1.0-dev sox task-spooler  - Error 100
         14:12:20.709 WARNING: (Some) Packages could not be installed.
 - [ ] - Any Plugin, das nervt mich persönlich :-/
