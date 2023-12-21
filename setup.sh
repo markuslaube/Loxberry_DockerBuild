@@ -1,11 +1,32 @@
 #!/bin/bash
 
-args=$(getopt -a -o d:f:c:i:o:w:s:l: --long dockerfile:,compose-file:,container-name:,image-name:,opt-dir:,port80:,port443:,linux: -- "$@")
+args=$(getopt -a -o d:f:c:i:o:w:s:l:hV --long dockerfile:,compose-file:,container-name:,image-name:,opt-dir:,port80:,port443:,linux:,help,Version -- "$@")
 
 if [[ $? -gt 0 ]]; then
   usage
 fi
 
+function usage() {
+	echo "${0} aus unbekannter Releaseversion für die Erstellung eines LoxBerry Docker-Containers"
+ 	echo ""
+        echo "Hilfe ist wirklich vorgesehen"
+ 	echo "starte ohne Parameter und wir fragen alles ab"
+  	echo ""
+   	echo "das script legt die Werte in die Datei DockerBuild/docker_build-Information ab"
+        echo "mit -d [filename] oder --dockerfile [filename] kannst Du eine solche Datei übergeben und er übernimmt daraus die Werte"
+	echo ""
+        echo "-h, -V --help, --Version zeigt dir diese Hilfe an"
+	echo ""
+        echo "-f | --compose-file [filename] sagt wo das finale docker-compose.yml liegen soll."
+	echo "-c | --container-name [containername] sagt dem Scrip wie der Container im Docker genannt werden soll."
+        echo "-i | --image-name [imagename] sagt dem Scrip wie der Image in der Docker-Registry genannt werden soll."
+	echo "-o | --opt-dir [/pfad/zu/dockervolumes/] gibt einen Pfad an, wo der Container später sein /opt ablegen soll."
+        echo "-w | --port80 [0-65000] gibt einen Port an, der an den Container auf Port 80 umgeleitet wird (w für web)"
+	echo "-s | --port443 [0-65000] gibt einen Port an, der an den Container auf Port 443 umgeleitet wird (s für secure web)"
+        echo "-l | --linux [11|12] gibt an welche Debian Distribution verwendet werden soll (noch nicht final umgesetz)"
+	echo ""
+}
+	
 unset DOCKER_COMPOSE_FILE
 unset LOXBERRY_CONTAINER
 unset LOXBERRY_IMAGENAME
