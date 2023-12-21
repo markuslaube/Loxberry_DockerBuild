@@ -75,13 +75,11 @@ if [ -z $DEBIAN_RELEASE ]; then
 	read -p "DEBIAN_RELEASE nicht gesetzt, Bitte gib '11' oder '12' an um Dich für Debian11 (bullseye) oder Debian12 (Bookworm) zu entscheiden: " DEBIAN_RELEASE
 fi
 
-function testdebian() { 
 case $DEBIAN_RELEASE in
     11 | bullseye | Bullseye )	DEBIAN_RELEASE="bullseye" ;;
     12 | bookworm | Bookworm )	DEBIAN_RELEASE="bookworm" ;;
     *)				echo -n "unbekannte Debian Version, 11|12|bullseye|Bookworm sind zulässig" ; exit 1 ;;
 esac
-}
 
 (
 echo DOCKER_COMPOSE_FILE=$DOCKER_COMPOSE_FILE
