@@ -227,8 +227,10 @@ if [ -e /boot/loxberry/.docker ]; then
 echo -e "DockerContainer:    This appears to be an image based on Docker, this is not officially supported and is not subject to Loxberry maintenance."
 fi
 echo -e "\n\nHit ${BOLD}<CTRL>+C${RESET} now to stop, any other input will continue.\n"
+if [ ! -e /boot/loxberry/.docker ]; then
 read -n 1 -s -r -p "Press any key to continue"
 tput clear
+fi
 
 # Download Release
 TITLE "Downloading LoxBerry sources from GitHub..."
@@ -1077,6 +1079,10 @@ fi
 TITLE "Installing some default config files for root..."
 cp $LBHOME/.vimrc /root
 cp $LBHOME/.profile /root
+
+# mindestens in meinem Container komme ich mit der Zeile "set listchars" in der .vimrc nicht klar, daher passen wir das hier an
+mv /root/.vimrc /tmp/vimrc
+grep -v 'set listchars' /tmp/vimrc > /root/.vimrc
 
 # Set correct File Permissions - again
 TITLE "Setting File Permissions (again)..."
