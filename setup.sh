@@ -1,6 +1,6 @@
 #!/bin/bash
 
-args=$(getopt -a -o f:c:i:o:w:s: --long compose-file:,container-name:,image-name:,opt-dir:,port80:,port443: -- "$@")
+args=$(getopt -a -o d:f:c:i:o:w:s: --long dockerfile:,compose-file:,container-name:,image-name:,opt-dir:,port80:,port443: -- "$@")
 
 if [[ $? -gt 0 ]]; then
   usage
@@ -17,6 +17,7 @@ eval set -- ${args}
 while :
 do
   case $1 in
+    -d | --dockerfile)		. $2                    ; shift 2  ;;
     -f | --compose-file)        DOCKER_COMPOSE_FILE=$2  ; shift 2  ;;	
     -c | --container-name)	LOXBERRY_CONTAINER=$2   ; shift 2  ;;
     -i | --image-name)		LOXBERRY_IMAGENAME=$2   ; shift 2  ;;
@@ -65,9 +66,6 @@ cd DockerBuild
 chmod 777 docker-entrypoint.sh 			## Warning this is a security fail!
 docker build -t ${LOXBERRY_IMAGENAME} -f LoxBerry3.dockerfile .
 cd -
-#
-# das hier ist vorsicht ... wir wollen nach dem ersten kickstart kein auf die Nase gefallenes System
-ln -s /opt2/loxberry ${LOXBERRY_OPT_DIR}/loxberry
 #
 echo "ab hier gehts leider aktuell noch manuell weiter"
 echo ""
