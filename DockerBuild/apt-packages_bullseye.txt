@@ -1,0 +1,2 @@
+This script was already executed on this LoxBerry. You cannot reinstall LoxBerry.
+If you are sure what you are doing, rm /boot/rootfsresized and restart again.
