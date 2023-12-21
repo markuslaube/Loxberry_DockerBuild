@@ -1091,14 +1091,16 @@ else
 fi
 
 # The end
-export PERL5LIB=$LBHOME/libs/perllib
-IP=$(perl -e 'use LoxBerry::System; $ip = LoxBerry::System::get_localip(); print $ip; exit;')
-echo -e "\n\n\n${GREEN}WE ARE DONE! :-)${RESET}"
-echo -e "\n\n${RED}You have to reboot your LoxBerry now!${RESET}"
-echo -e "\n${GREEN}Then point your browser to http://$IP or http://loxberry"
-echo -e "\nIf you would like to login via SSH, use user 'loxberry' and pass 'loxberry'."
-echo -e "Root's password is 'loxberry', too (you cannot login directly via SSH)."
-echo -e "\nGood Bye.\n\n${RESET}"
+if [ ! -e /boot/loxberry/.docker ]; then
+	export PERL5LIB=$LBHOME/libs/perllib
+	IP=$(perl -e 'use LoxBerry::System; $ip = LoxBerry::System::get_localip(); print $ip; exit;')
+	echo -e "\n\n\n${GREEN}WE ARE DONE! :-)${RESET}"
+	echo -e "\n\n${RED}You have to reboot your LoxBerry now!${RESET}"
+	echo -e "\n${GREEN}Then point your browser to http://$IP or http://loxberry"
+	echo -e "\nIf you would like to login via SSH, use user 'loxberry' and pass 'loxberry'."
+	echo -e "Root's password is 'loxberry', too (you cannot login directly via SSH)."
+	echo -e "\nGood Bye.\n\n${RESET}"
+fi
 
 touch /boot/rootfsresized
 
@@ -1119,9 +1121,13 @@ else
 	touch /boot/docker/.firstboot
 	rm -f /boot/docker/.prebuild
 	. /boot/loxberry/.docker
-	echo "jetzt bitte auslogen und dann auf dem Docker-Host folgendes ausführen:"
- 	echo
-	echo "docker commit ${LOXBERRY_IMAGENAME}_temp ${LOXBERRY_IMAGENAME}:latest"
+ 	export PERL5LIB=$LBHOME/libs/perllib
+	IP=$(perl -e 'use LoxBerry::System; $ip = LoxBerry::System::get_localip(); print $ip; exit;')
+	echo -e "\n\n\n${GREEN}WE ARE DONE! :-)${RESET}"
+	echo -e "Root's password is 'loxberry', too (you cannot login directly via SSH)."
+	echo -e "\n\n${RED}You have to commit your LoxBerry Image now! Please Logout from image and do:${RESET}"
+	echo -e "\n${GREEN}docker commit ${LOXBERRY_IMAGENAME}_temp ${LOXBERRY_IMAGENAME}:latest"
+	echo -e "\nGood Bye.\n\n${RESET}"
 	echo ""
 	exit 0
  fi
