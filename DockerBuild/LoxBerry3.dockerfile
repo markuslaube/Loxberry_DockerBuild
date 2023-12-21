@@ -19,6 +19,10 @@ COPY root_known_hosts /root/.ssh/known_hosts
 COPY preinstall.sh /tmp/
 RUN /bin/bash /tmp/preinstall.sh
 COPY docker_build-Information /boot/loxberry/.docker
+COPY dphys-swapfile.service /boot/docker/
+COPY networking.service /boot/docker/
+COPY wpa_supplicant.service /boot/docker/
+COPY build-systemd.sh /boot/docker/
 RUN curl -sSLo /root/install-loxberry.sh https://raw.githubusercontent.com/markuslaube/Loxberry_DockerBuild/main/install_bookworm.sh
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
