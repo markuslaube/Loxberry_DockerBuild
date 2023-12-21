@@ -1,6 +1,6 @@
 #!/bin/bash
 
-args=$(getopt -a -o d:f:c:i:o:w:s: --long dockerfile:,compose-file:,container-name:,image-name:,opt-dir:,port80:,port443: -- "$@")
+args=$(getopt -a -o d:f:c:i:o:w:s:l: --long dockerfile:,compose-file:,container-name:,image-name:,opt-dir:,port80:,port443:,linux: -- "$@")
 
 if [[ $? -gt 0 ]]; then
   usage
@@ -12,6 +12,7 @@ unset LOXBERRY_IMAGENAME
 unset LOXBERRY_OPT_DIR
 unset DOCKER_NET_TCP_80
 unset DOCKER_NET_TCP_443
+unset DEBIAN_RELEASE
 
 eval set -- ${args}
 while :
@@ -24,6 +25,7 @@ do
     -o | --opt-dir)		LOXBERRY_OPT_DIR=$2	; shift 2  ;;
     -w | --port80)		DOCKER_NET_TCP_80=$2	; shift 2  ;;
     -s | --port443)		DOCKER_NET_TCP_443=$2	; shift 2  ;;
+    -l | --linux                DEBIAN_RELEASE=$2       ; shift 2  ;;
     --) shift; break ;;
     *) >&2 echo Unsupported option: $1
        usage ;;
@@ -48,6 +50,9 @@ fi
 if [ -z $DOCKER_NET_TCP_443 ]; then
 	read -p "DOCKER_NET_TCP_443 nicht gesetzt, Bitte gib einen Port, über den Du port 80 des Containers erreichen willst an: " DOCKER_NET_TCP_443
 fi
+if [ -z $DEBIAN_RELEASE ]; then
+	read -p "DEBIAN_RELEASE nicht gesetzt, Bitte gib '11' oder '12' an um Dich für Debian11 oder Debian12 zu entscheiden: " DEBIAN_RELEASE
+fi
 
 (
 echo DOCKER_COMPOSE_FILE=$DOCKER_COMPOSE_FILE
@@ -56,6 +61,7 @@ echo LOXBERRY_IMAGENAME=$LOXBERRY_IMAGENAME
 echo LOXBERRY_OPT_DIR=$LOXBERRY_OPT_DIR
 echo DOCKER_NET_TCP_80=$DOCKER_NET_TCP_80
 echo DOCKER_NET_TCP_443=$DOCKER_NET_TCP_443
+echo DEBIAN_RELEASE=$DEBIAN_RELEASE
 echo DOCKER_VERSION="$(docker --version | sed 's/ //g' )" 
 ) > DockerBuild/docker_build-Information
 
@@ -64,7 +70,7 @@ read -p "weiter machen, ansonsten STRG-C"
 
 cd DockerBuild
 chmod 777 docker-entrypoint.sh 			## Warning this is a security fail!
-docker build -t ${LOXBERRY_IMAGENAME} -f LoxBerry3.dockerfile .
+docker build -t ${LOXBERRY_IMAGENAME} --build-arg DEBIAN_RELEASE="${DEBIAN_RELEASE}" -f LoxBerry3.dockerfile .
 cd -
 #
 echo "ab hier gehts leider aktuell noch manuell weiter"
