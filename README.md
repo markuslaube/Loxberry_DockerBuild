@@ -9,6 +9,12 @@ Ich habe das ganze zwar erfolgreich getestet - und ja es funktioniert, es gibt a
  - d auch wenn ich angefangen habe, so viel wie möglich in englisch zu dokumentieren, alle texte und hilfen innerhalb meiner Scripte sind ausschließlich auf deutsch
  - e Achtung aktuell erkennt das Image noch nicht das es "nur" ein Update gab. Das heist wir können das image noch nicht neu bauen um eine alte Installation zu nutzen.
 
+# Aktuelle Probleme
+Der Container läuft eigentlich gut und Stabil. Allerdings hatte ich mich entschieden das ganze gleich mit Debian12 zu bauen, einige Fehler die ich finde führe ich auf diese Debian Version zurück. Daher ist der aktuelle Plan:
+ - Einbauen, dass ich redeployen kann ohne daten (/opt) zu verlieren
+ - Das Debian11-Installer-Script analog zu meinen aktuellen Anpassungen zu bauen und dann
+ - das ganze mit Debian11 zu bauen und zu testen
+
 # todo-listen
 setup anpassen, es sollte fragen:
 - (part) wo liegt docker-compose.yml
