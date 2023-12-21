@@ -59,8 +59,15 @@ systemctl unmask systemd-logind
 systemctl enable docker-entrypoint.service
 
 if [ -e /boot/docker/.firstboot ]; then
-        mv /opt2/loxberry /opt/
+        if [ ! -e /opt/loxberry ]; then mv /opt2/loxberry /opt/ ; fi 
 	rm -rf /opt2
+	## Todo --> Wir wollen das Passwort-Tool vom loxberry lehren bei einer änderung die Datei /opt/tools/etc_shadow_passes anzulegen
+ 	## zum testen hab ich die manuell erstellt
+        if [ -e /opt/tools/etc_shadow_passes ]; then 
+		shadow=$(cat /etc/shadow)
+		for user in $( cat /opt/tools/etc_shadow_passes | awk -F: '{print $1}' ) ; do shadow=$(echo "$shadow" | grep -v ^"${user}:") ; done
+		( cat /opt/tools/etc_shadow_passes ; echo "$shadow" ) > /etc/shadow
+	fi
         rm -f /boot/docker/.firstboot
 fi
 
