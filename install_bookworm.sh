@@ -1121,14 +1121,12 @@ else
 	systemctl stop vsftpd.service
 	systemctl stop smbd.service
 	systemctl stop rsyslog.service
-	mv /opt /opt2
-	# offenes Todo:
-	# 4. Zeile vom /root/.vimrc löschen :D
-	touch /boot/docker/.firstboot
-	rm -f /boot/docker/.prebuild
 	. /boot/loxberry/.docker
  	export PERL5LIB=$LBHOME/libs/perllib
 	IP=$(perl -e 'use LoxBerry::System; $ip = LoxBerry::System::get_localip(); print $ip; exit;')
+	mv /opt /opt2
+	touch /boot/docker/.firstboot
+	rm -f /boot/docker/.prebuild
 	echo -e "\n\n\n${GREEN}WE ARE DONE! :-)${RESET}"
 	echo -e "Root's password is 'loxberry', too (you cannot login directly via SSH)."
 	echo -e "\n\n${RED}You have to commit your LoxBerry Image now! Please Logout from image and do:${RESET}"
