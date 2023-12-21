@@ -48,7 +48,10 @@ shift $((OPTIND-1))
 
 # install needed packages
 apt-get update --allow-releaseinfo-change
+
+if [ ! -e /boot/loxberry/.docker ]; then
 apt-get -y install jq git
+fi
 
 # Stop loxberry Service
 if /bin/systemctl --no-pager status apache2.service; then
@@ -217,6 +220,9 @@ echo -e "Distribution:       $PRETTY_NAME"
 echo -e "DietPi Version:     $G_DIETPI_VERSION_CORE.$G_DIETPI_VERSION_SUB"
 echo -e "Hardware Model:     $G_HW_MODEL_NAME"
 echo -e "Architecture:       $G_HW_ARCH_NAME"
+if [ -e /boot/loxberry/.docker ]; then
+echo -e "DockerContainer:    This appears to be an image based on Docker, this is not officially supported and is not subject to Loxberry maintenance."
+fi
 echo -e "\n\nHit ${BOLD}<CTRL>+C${RESET} now to stop, any other input will continue.\n"
 read -n 1 -s -r -p "Press any key to continue"
 tput clear
@@ -333,6 +339,7 @@ TITLE "Installing additional software packages from apt repository..."
 /boot/dietpi/func/dietpi-set_software apt compress disable
 /boot/dietpi/func/dietpi-set_software apt cache clean
 apt update
+if [ ! -e /boot/loxberry/.docker ]; then
 
 if [ -e "$LBHOME/packages.txt" ]; then
         PACKAGES=""
@@ -370,7 +377,7 @@ if [ $? != 0 ]; then
 else
         OK "Successfully installed all queued packages.\n"
 fi
-
+fi
 /boot/dietpi/func/dietpi-set_software apt compress enable
 /boot/dietpi/func/dietpi-set_software apt cache clean
 apt update
@@ -943,12 +950,14 @@ TITLE "Installing PIP2"
 curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output /tmp/get-pip.py
 python2 /tmp/get-pip.py
 
+if [ ! -e /boot/loxberry/.docker ]; then
 # Installing raspi-config if we are on a raspberry
 if echo $HWMODELFILENAME | grep -q "raspberry"; then
 	TITLE "Installing raspi-config"
 	rm /usr/bin/raspi-config
 	curl -L https://raw.githubusercontent.com/RPi-Distro/raspi-config/master/raspi-config -o /usr/bin/raspi-config
 	chmod +x /usr/bin/raspi-config
+fi
 fi
 
 # Configuring /etc/hosts
@@ -1034,15 +1043,41 @@ else
 fi
 
 # The end
-export PERL5LIB=$LBHOME/libs/perllib
-IP=$(perl -e 'use LoxBerry::System; $ip = LoxBerry::System::get_localip(); print $ip; exit;')
-echo -e "\n\n\n${GREEN}WE ARE DONE! :-)${RESET}"
-echo -e "\n\n${RED}You have to reboot your LoxBerry now!${RESET}"
-echo -e "\n${GREEN}Then point your browser to http://$IP or http://loxberry"
-echo -e "\nIf you would like to login via SSH, use user 'loxberry' and pass 'loxberry'."
-echo -e "Root's password is 'loxberry', too (you cannot login directly via SSH)."
-echo -e "\nGood Bye.\n\n${RESET}"
+if [ ! -e /boot/loxberry/.docker ]; then
+	export PERL5LIB=$LBHOME/libs/perllib
+	IP=$(perl -e 'use LoxBerry::System; $ip = LoxBerry::System::get_localip(); print $ip; exit;')
+	echo -e "\n\n\n${GREEN}WE ARE DONE! :-)${RESET}"
+	echo -e "\n\n${RED}You have to reboot your LoxBerry now!${RESET}"
+	echo -e "\n${GREEN}Then point your browser to http://$IP or http://loxberry"
+	echo -e "\nIf you would like to login via SSH, use user 'loxberry' and pass 'loxberry'."
+	echo -e "Root's password is 'loxberry', too (you cannot login directly via SSH)."
+	echo -e "\nGood Bye.\n\n${RESET}"
+fi
 
 touch /boot/rootfsresized
 
-exit 0
+if [ ! -e /boot/loxberry/.docker ]; then
+	exit 0
+else
+	systemctl stop apache2.service
+	systemctl stop autofs.service
+	systemctl stop cron.service
+	systemctl stop mosquitto.service
+	systemctl stop nmbd.service
+	systemctl stop vsftpd.service
+	systemctl stop smbd.service
+	systemctl stop rsyslog.service
+	. /boot/loxberry/.docker
+ 	export PERL5LIB=$LBHOME/libs/perllib
+	IP=$(perl -e 'use LoxBerry::System; $ip = LoxBerry::System::get_localip(); print $ip; exit;')
+	mv /opt /opt2
+	touch /boot/docker/.firstboot
+	rm -f /boot/docker/.prebuild
+	echo -e "\n\n\n${GREEN}WE ARE DONE! :-)${RESET}"
+	echo -e "Root's password is 'loxberry', too (you cannot login directly via SSH)."
+	echo -e "\n\n${RED}You have to commit your LoxBerry Image now! Please Logout from image and do:${RESET}"
+	echo -e "\n${GREEN}docker commit ${LOXBERRY_IMAGENAME}_temp ${LOXBERRY_IMAGENAME}:latest"
+	echo -e "\nGood Bye.\n\n${RESET}"
+	echo ""
+	exit 0
+ fi
