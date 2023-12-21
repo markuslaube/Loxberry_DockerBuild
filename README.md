@@ -3,7 +3,7 @@ Docker Build Script and Installation Tools for the famous LoxBerry
 
 # Not Supportet!
 Ich habe das ganze zwar erfolgreich getestet - und ja es funktioniert, es gibt aber
- - a noch einige stellen an denen ich nicht sicher bin ob ich alles dokumentiert habe
+ - a keine umfassende Tests was am Ende geht und was dann doch nicht
  - b keinen Support von Loxberry selbst auf den Container
  - c keinen bzw. sehr verzögerten Support von mir auf die Anleitung
  - d auch wenn ich angefangen habe, so viel wie möglich in englisch zu dokumentieren, alle texte und hilfen innerhalb meiner Scripte sind ausschließlich auf deutsch
