@@ -11,7 +11,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/dl.yarnpkg.com.asc] https://dl.yarn
 RUN apt-get -y update && apt-get -y install yarn  # wenn ich das über die packageliste  mache kommt bei mir ein fehler database outdatet
 RUN apt-get -y upgrade
 RUN apt-cache dumpavail | dpkg --merge-avail
-COPY apt-packages.txt /tmp/apt-packages.txt
+COPY apt-packages_${DEBIAN_RELEASE}.txt /tmp/apt-packages.txt
 RUN dpkg --set-selections < /tmp/apt-packages.txt
 RUN apt-get -y dselect-upgrade
 RUN apt-get -y update
