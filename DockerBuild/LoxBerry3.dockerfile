@@ -1,7 +1,9 @@
 ARG DEBIAN_RELEASE
-ENV DEBIAN_RELEASE=${DEBIAN_RELEASE}
 FROM debian:${DEBIAN_RELEASE}
 ENV DEBIAN_FRONTEND=noninteractive
+ARG DEBIAN_RELEASE
+COPY install_${DEBIAN_RELEASE}.sh /root/install-loxberry.sh
+COPY apt-packages_${DEBIAN_RELEASE}.txt /tmp/apt-packages.txt
 RUN apt-get -y update
 RUN apt-get -y install apt-utils
 RUN apt-get -y install apt-transport-https lsb-release ca-certificates gnupg2 curl
@@ -12,7 +14,6 @@ RUN echo "deb [signed-by=/usr/share/keyrings/dl.yarnpkg.com.asc] https://dl.yarn
 RUN apt-get -y update && apt-get -y install yarn  # wenn ich das über die packageliste  mache kommt bei mir ein fehler database outdatet
 RUN apt-get -y upgrade
 RUN apt-cache dumpavail | dpkg --merge-avail
-COPY apt-packages_${DEBIAN_RELEASE}.txt /tmp/apt-packages.txt
 RUN dpkg --set-selections < /tmp/apt-packages.txt
 RUN apt-get -y dselect-upgrade
 RUN apt-get -y update
@@ -25,6 +26,5 @@ COPY dphys-swapfile.service /boot/docker/
 COPY networking.service /boot/docker/
 COPY wpa_supplicant.service /boot/docker/
 COPY build-systemd.sh /boot/docker/
-COPY install_${DEBIAN_RELEASE}.sh /root/install-loxberry.sh
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
