@@ -54,7 +54,7 @@ cp /boot/docker/networking.service /lib/systemd/system/
 cp /boot/docker/wpa_supplicant.service /lib/systemd/system/
 
 # andere dinge müssen vielleicht nicht gar so schmutzig abgeschalten werden
-systemctl mask systemd-firstboot.service systemd-udevd.service systemd-modules-load.service
+systemctl mask systemd-firstboot.service systemd-udevd.service systemd-modules-load.service dphys-swapfile.service wpa_supplicant.service networking.service
 systemctl unmask systemd-logind
 systemctl enable docker-entrypoint.service
 
