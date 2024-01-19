@@ -47,8 +47,10 @@ ToDos für Second Editon:
 - (todo) beim ersten start des Containers erkennen das /opt/loxberry und außerhalb von /opt liegende Informationen zurückholen (passwörter, etc.)
 
 # Verwendung:
+<pre>
 - giturl="https://github.com/markuslaube/Loxberry_DockerBuild.git"
 - gitrepo="Loxberry_DockerBuild"
 - git clone ${giturl}
 - cd ${gitrepo}
 - sudo bash setup.sh
+</pre>
