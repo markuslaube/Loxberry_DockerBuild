@@ -48,9 +48,9 @@ ToDos für Second Editon:
 
 # Verwendung:
 <pre>
-- giturl="https://github.com/markuslaube/Loxberry_DockerBuild.git"
-- gitrepo="Loxberry_DockerBuild"
-- git clone ${giturl}
-- cd ${gitrepo}
-- sudo bash setup.sh
+giturl="https://github.com/markuslaube/Loxberry_DockerBuild.git"
+gitrepo="Loxberry_DockerBuild"
+git clone ${giturl}
+cd ${gitrepo}
+sudo bash setup.sh
 </pre>
